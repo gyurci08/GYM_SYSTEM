@@ -30,4 +30,16 @@ select w.id,
        w.dml_flag,
        w.version, rowid from workers w;
 
+select u.id,
+       u.worker_id,
+       u.username,
+       u.password,
+       u.creator_user,
+       u.created_at,
+       u.mod_user,
+       u.mod_time,
+       u.dml_flag,
+       u.version,rowid from users u;
+
+
 commit;

@@ -22,6 +22,28 @@
                              
                              
                              
+  FUNCTION ADD_USER(
+                              VAR_FIRST_NAME            VARCHAR2
+                              ,VAR_LAST_NAME            VARCHAR2
+                              ,VAR_ADDRESS              VARCHAR2
+                              ,VAR_BIRTHDATE            DATE
+                              ,VAR_USERNAME             VARCHAR2
+                              ,VAR_PASSWORD             VARCHAR2
+                              )
+                             RETURN
+                             BOOLEAN;                           
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
 end pkg_outside_control;
 /
 create or replace package body pkg_outside_control is
@@ -81,6 +103,59 @@ create or replace package body pkg_outside_control is
       END;
       
     END ADD_WORKER;
+    
+    
+    
+    
+    
+      FUNCTION ADD_USER(
+                              VAR_FIRST_NAME            VARCHAR2
+                              ,VAR_LAST_NAME            VARCHAR2
+                              ,VAR_ADDRESS              VARCHAR2
+                              ,VAR_BIRTHDATE            DATE
+                              ,VAR_USERNAME       VARCHAR2
+                              ,VAR_PASSWORD       VARCHAR2
+                              )
+                             RETURN
+                             BOOLEAN
+  IS
+
+  
+    BEGIN
+      DECLARE 
+        R_PEOPLE_ID NUMBER;
+        R_USER_ID NUMBER;
+      BEGIN
+        pkg_data_manipulation.insert_people(people_seq.nextval,VAR_FIRST_NAME,VAR_LAST_NAME,VAR_ADDRESS,VAR_BIRTHDATE,R_PEOPLE_ID);
+        pkg_data_manipulation.insert_USER(users_seq.nextval,R_PEOPLE_ID,VAR_USERNAME,VAR_PASSWORD,R_USER_ID);
+        IF R_PEOPLE_ID IS NOT NULL AND R_USER_ID IS NOT NULL
+           THEN RETURN TRUE;
+           ELSE RETURN FALSE;
+        END IF;
+      END;
+      
+    END ADD_USER;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

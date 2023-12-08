@@ -10,10 +10,13 @@
         people_not_exists_exc_code CONSTANT NUMBER := -20003; 
         
         worker_duplication_exc   EXCEPTION;
-        worker_duplication_exc_code CONSTANT NUMBER := -20004; 
+        worker_duplication_exc_code CONSTANT NUMBER := -20004;
+        
+        worker_not_exists_exc EXCEPTION;
+        worker_not_exists_exc_code CONSTANT NUMBER := -20005; 
         
         user_duplication_exc EXCEPTION;
-        user_duplication_exc_code CONSTANT NUMBER := -20005; 
+        user_duplication_exc_code CONSTANT NUMBER := -20006; 
 end pkg_error_messages;
 /
 create or replace package body pkg_error_messages is
@@ -28,10 +31,13 @@ create or replace package body pkg_error_messages is
            PRAGMA EXCEPTION_INIT (customer_duplication_exc, -20003);
         
         worker_duplication_exc   EXCEPTION;
-           PRAGMA EXCEPTION_INIT (customer_duplication_exc, -20004); 
-        
+           PRAGMA EXCEPTION_INIT (customer_duplication_exc, -20004);
+           
+        worker_not_exists_exc EXCEPTION;
+           PRAGMA EXCEPTION_INIT (customer_duplication_exc, -20005);
+           
         user_duplication_exc EXCEPTION;
-           PRAGMA EXCEPTION_INIT (customer_duplication_exc, -20005); 
+           PRAGMA EXCEPTION_INIT (customer_duplication_exc, -20006); 
 
 end pkg_error_messages;
 /
