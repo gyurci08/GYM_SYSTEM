@@ -21,5 +21,13 @@ select c.id,
        c.dml_flag,
        c.version,rowid from customers c;
 
+select w.id,
+       w.people_id,
+       w.creator_user,
+       w.created_at,
+       w.mod_user,
+       w.mod_time,
+       w.dml_flag,
+       w.version, rowid from workers w;
 
 commit;

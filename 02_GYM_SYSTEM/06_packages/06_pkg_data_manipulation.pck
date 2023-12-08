@@ -34,6 +34,13 @@
                             ,VAR_MS_LASTS             DATE
                             ,VAR_new_id               OUT NUMBER     
                             );
+                            
+                            
+  PROCEDURE insert_worker(
+                            VAR_ID NUMBER
+                            ,VAR_PEOPLE_ID NUMBER
+                            ,VAR_NEW_ID OUT NUMBER
+                            );
 
 
 
@@ -223,7 +230,50 @@ END insert_customer;
 
 
 
+  PROCEDURE insert_worker(
+                            VAR_ID NUMBER
+                            ,VAR_PEOPLE_ID NUMBER
+                            ,VAR_NEW_ID OUT NUMBER
+                            )
+    IS           
+    BEGIN
+      bool := IS_PRESENT_BY_ID(
+                   VAR_TABLE_NAME => 'people'
+                   ,VAR_FIELD => 'ID'
+                   ,VAR_ID => VAR_PEOPLE_ID
+                  );
+        BEGIN
+        IF bool -- TRUE
+          THEN
+            bool := null;
+            bool := IS_PRESENT_BY_ID(
+                         VAR_TABLE_NAME => 'workers'
+                         ,VAR_FIELD => 'PEOPLE_ID'
+                         ,VAR_ID => VAR_PEOPLE_ID
+                        );
 
+            IF NOT bool -- FALSE
+                THEN
+                insert into workers
+                    (ID,PEOPLE_ID,CREATOR_USER,CREATED_AT,MOD_USER,MOD_TIME,DML_FLAG,VERSION)
+                    values 
+                    (VAR_ID, VAR_PEOPLE_ID,'','', '', '', '','');
+              ELSE 
+                RAISE pkg_error_messages.worker_duplication_exc;
+            END IF;
+          ELSE 
+            RAISE pkg_error_messages.people_not_exists_exc;
+        END IF;
+      END;
+        EXCEPTION
+          WHEN pkg_error_messages.people_not_exists_exc
+            THEN raise_application_error(pkg_error_messages.people_not_exists_exc_code,'The worker is not in people table of the database.');
+            
+          WHEN pkg_error_messages.customer_duplication_exc
+            THEN raise_application_error(pkg_error_messages.customer_duplication_exc_code,'The worker is already in the database.');
+
+      VAR_NEW_ID := ID;
+    END insert_worker;
 
 
 
