@@ -32,7 +32,7 @@ BEGIN
   :new.mod_time := systimestamp;
 END;
 /
-CREATE OR REPLACE TRIGGER tr_customers_after_audit
+CREATE OR REPLACE TRIGGER tr_customers_after
   AFTER INSERT OR UPDATE OR DELETE ON customers
   FOR EACH ROW
     DECLARE

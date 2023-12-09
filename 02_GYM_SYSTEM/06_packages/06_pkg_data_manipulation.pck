@@ -5,7 +5,7 @@
                            ,VAR_BIRTHDATE           DATE
                             )
                            RETURN
-                           BOOLEAN;
+                           INTEGER;
   
    FUNCTION IS_PRESENT_BY_ID(
                              VAR_TABLE_NAME           VARCHAR2
@@ -70,7 +70,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
                            ,VAR_BIRTHDATE           DATE
                             )
                            RETURN
-                           BOOLEAN                   
+                           INTEGER                   
      IS
   
           CURSOR ToCheck
@@ -84,22 +84,12 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
         
      BEGIN
            ID := null;
-     
-           bool := false;
-  
+
            OPEN ToCheck;
            FETCH ToCheck INTO ID;
            CLOSE ToCheck;
           
-           IF ID IS NULL
-              THEN bool := false;
-           ELSE
-              bool := true;
-           END IF;
-
-
-
-           RETURN bool;
+           RETURN ID;
    END IS_PRESENT_BY_NAME;
 
 
@@ -161,12 +151,12 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
                             )
       IS           
       BEGIN
-        bool := IS_PRESENT_BY_NAME(
+        VAR_new_id := IS_PRESENT_BY_NAME(
                            VAR_FIRST_NAME => VAR_FIRST_NAME
                            ,VAR_LAST_NAME => VAR_LAST_NAME
                            ,VAR_BIRTHDATE => VAR_BIRTHDATE  
                            );
-        IF NOT bool -- False
+        IF VAR_new_id IS NULL -- THERE IS NO ID FROM RECORD
            THEN
                insert into people
                            (
@@ -183,11 +173,11 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
                             ,VERSION
                            )
                values 
-                           (VAR_ID, VAR_FIRST_NAME, VAR_LAST_NAME, VAR_ADDRESS, VAR_BIRTHDATE,'','','','','','');
-                           VAR_new_id := VAR_ID; 
+                           (VAR_ID, VAR_FIRST_NAME, VAR_LAST_NAME, VAR_ADDRESS, VAR_BIRTHDATE,'','','','','',''); 
+                           VAR_new_id := VAR_ID;
            ELSE 
-            RAISE pkg_error_messages.people_duplication_exc;
-       
+            ---RAISE pkg_error_messages.people_duplication_exc;
+            NULL;
       END IF;
 
       EXCEPTION
@@ -289,8 +279,8 @@ END insert_customer;
           WHEN pkg_error_messages.people_not_exists_exc
             THEN raise_application_error(pkg_error_messages.people_not_exists_exc_code,'The worker is not in people table of the database.');
             
-          WHEN pkg_error_messages.customer_duplication_exc
-            THEN raise_application_error(pkg_error_messages.customer_duplication_exc_code,'The worker is already in the database.');
+          WHEN pkg_error_messages.worker_duplication_exc
+            THEN raise_application_error(pkg_error_messages.worker_duplication_exc_code,'The worker is already in the database.');
 
       VAR_NEW_ID := ID;
     END insert_worker;
