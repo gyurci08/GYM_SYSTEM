@@ -32,7 +32,9 @@
                              
                              
                              
-                             
+  PROCEDURE remove_user(
+                         VAR_WORKER_ID                   NUMBER
+                         );                     
                              
                              
                              
@@ -130,8 +132,17 @@ create or replace package body pkg_outside_control is
     
     
     
-    
-    
+    procedure remove_user(
+                         VAR_WORKER_ID                   NUMBER
+                         )
+    IS
+
+  
+    BEGIN
+      BEGIN
+        pkg_data_manipulation.REMOVE_USER(VAR_WORKER_ID);
+      END; 
+    END remove_user;
     
     
     

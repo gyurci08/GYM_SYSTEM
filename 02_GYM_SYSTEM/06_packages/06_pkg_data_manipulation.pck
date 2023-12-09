@@ -51,6 +51,16 @@
                             );
 
 
+  PROCEDURE remove_user(
+                      VAR_WORKER_ID                   NUMBER
+                            );
+
+
+
+
+
+
+
 
 
 END pkg_data_manipulation;
@@ -126,7 +136,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
      END IS_PRESENT_BY_ID;
 
 
-
+     
 
 
 
@@ -330,9 +340,9 @@ PROCEDURE insert_user(
         END;
         EXCEPTION
           WHEN pkg_error_messages.worker_not_exists_exc
-            THEN raise_application_error(pkg_error_messages.worker_not_exists_exc_code,'The user is not in workers table of the database.');
+            THEN raise_application_error(pkg_error_messages.worker_not_exists_exc_code,'The user is not exists in worker.');
             
-          WHEN pkg_error_messages.customer_duplication_exc
+          WHEN pkg_error_messages.user_duplication_exc
             THEN raise_application_error(pkg_error_messages.user_duplication_exc_code,'The user is already in the database.');
 
       VAR_NEW_ID := ID;
@@ -343,7 +353,29 @@ PROCEDURE insert_user(
 ---
 ----   END OF INSERT
 ---------------------------------------------------------------
+PROCEDURE remove_user(
+                      VAR_WORKER_ID                   NUMBER
+                            )
+    IS           
+    BEGIN
+                    bool := null;
+                    bool := IS_PRESENT_BY_ID(
+                           VAR_TABLE_NAME => 'users'
+                           ,VAR_FIELD => 'WORKER_ID'
+                           ,VAR_ID => VAR_WORKER_ID
+                          );
 
+                      IF bool -- TRUE
+                      THEN
+                           delete from users u where u.worker_id=VAR_WORKER_ID;
+                      ELSE 
+                           RAISE pkg_error_messages.user_not_exists_exc;
+                    END IF;
+                    EXCEPTION
+                          WHEN pkg_error_messages.user_not_exists_exc
+                            THEN raise_application_error(pkg_error_messages.user_not_exists_exc_code,'The user does not exists.');
+
+    END remove_user;
 
 
 

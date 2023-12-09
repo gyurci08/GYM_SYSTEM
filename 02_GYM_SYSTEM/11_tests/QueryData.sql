@@ -47,4 +47,8 @@ select * from workers_h;
 select * from users_h;
 
 
+select * from vw_customers;
+
+
+
 commit;
