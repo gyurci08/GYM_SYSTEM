@@ -57,11 +57,14 @@
 
 
   PROCEDURE remove_worker(
-                      VAR_WORKER_ID                   NUMBER
+                      VAR_ID                   NUMBER
                             );
 
 
 
+  PROCEDURE remove_customer(
+                      VAR_ID                   NUMBER
+                            );
 
 
 
@@ -380,27 +383,27 @@ PROCEDURE remove_user(
     END remove_user;
 
     PROCEDURE remove_worker(
-                      VAR_WORKER_ID                   NUMBER
+                      VAR_ID                   NUMBER
                             )
     IS           
     BEGIN
                     bool := IS_PRESENT_BY_ID(
                            VAR_TABLE_NAME => 'workers'
                            ,VAR_FIELD => 'ID'
-                           ,VAR_ID => VAR_WORKER_ID
+                           ,VAR_ID => VAR_ID
                           );
 
                       IF bool -- TRUE
                       THEN
                               BEGIN
-                                  pkg_data_manipulation.remove_user(VAR_WORKER_ID);
+                                  pkg_data_manipulation.remove_user(VAR_ID);
                                   EXCEPTION                               
                                      /*WHEN pkg_error_messages.user_not_exists_exc                        --Does not catch the exception :(
                                           THEN NULL;*/
                                        WHEN OTHERS
                                           THEN NULL;
                               END;
-                              delete from workers w where w.ID=VAR_WORKER_ID;
+                              delete from workers w where w.ID=VAR_ID;
                       ELSE 
                            RAISE pkg_error_messages.worker_not_exists_exc;
                     END IF;
@@ -412,7 +415,30 @@ PROCEDURE remove_user(
 
 
 
+    PROCEDURE remove_customer(
+                      VAR_ID                   NUMBER
+                            )
+    IS           
+    BEGIN
+                    bool := IS_PRESENT_BY_ID(
+                           VAR_TABLE_NAME => 'customers'
+                           ,VAR_FIELD => 'ID'
+                           ,VAR_ID => VAR_ID
+                          );
 
+                      IF bool -- TRUE
+                      THEN
+                              BEGIN
+                                 delete from customers s where s.ID=VAR_ID;
+                              END;
+                      ELSE 
+                           RAISE pkg_error_messages.customer_not_exists_exc;
+                    END IF;
+                    EXCEPTION
+                          WHEN pkg_error_messages.customer_not_exists_exc
+                               THEN raise_application_error(pkg_error_messages.customer_not_exists_exc_code,'The customer does NOT exists.');
+
+    END remove_customer;
 
 
 

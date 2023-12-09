@@ -32,11 +32,13 @@
                              
                              
   procedure remove_worker(
-                         VAR_WORKER_ID                   NUMBER
+                         VAR_ID                   NUMBER
                          );                          
                              
                              
-                             
+  procedure  REMOVE_CUSTOMER(
+                         VAR_ID                   NUMBER
+                         );                     
                              
                              
 end pkg_outside_control;
@@ -51,8 +53,6 @@ create or replace package body pkg_outside_control is
                               ,VAR_MS_LASTS             DATE
                               )
   IS
-
-  
     BEGIN
       DECLARE 
         R_PEOPLE_ID NUMBER;
@@ -74,8 +74,6 @@ create or replace package body pkg_outside_control is
                               ,VAR_BIRTHDATE            DATE
                               )
   IS
-
-  
     BEGIN
       DECLARE 
         R_PEOPLE_ID NUMBER;
@@ -97,8 +95,6 @@ create or replace package body pkg_outside_control is
                               ,VAR_PASSWORD        VARCHAR2
                               )
   IS
-
-  
     BEGIN
       DECLARE 
         R_USER_ID NUMBER;
@@ -114,31 +110,42 @@ create or replace package body pkg_outside_control is
                          VAR_WORKER_ID                   NUMBER
                          )
     IS
-
-  
     BEGIN
       BEGIN
         pkg_data_manipulation.REMOVE_USER(VAR_WORKER_ID);
       END; 
     END remove_user;
-    
+
+
+
     
     procedure remove_worker(
-                         VAR_WORKER_ID                   NUMBER
+                         VAR_ID                   NUMBER
                          )
     IS
-
-  
     BEGIN
       BEGIN
-        pkg_data_manipulation.REMOVE_WORKER(VAR_WORKER_ID);
+        pkg_data_manipulation.REMOVE_WORKER(VAR_ID);
       END; 
     END remove_worker;
     
     
     
+
     
     
+    
+    
+    
+    procedure  REMOVE_CUSTOMER(
+                         VAR_ID                   NUMBER
+                         )
+    IS
+    BEGIN
+      BEGIN
+        pkg_data_manipulation.REMOVE_CUSTOMER(VAR_ID);
+      END; 
+    END REMOVE_CUSTOMER;
     
     
     

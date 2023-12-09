@@ -13,8 +13,8 @@ BOOL := FALSE;
   --pkg_outside_control.ADD_USER(233,'gyurci08','Gyuri123');
   
   --pkg_outside_control.remove_user(232);
-  --pkg_outside_control.remove_worker(233);
-  
+  --pkg_outside_control.remove_worker(234);
+  --pkg_outside_control.remove_customer(228);
   
 
   

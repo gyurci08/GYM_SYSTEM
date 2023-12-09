@@ -21,7 +21,9 @@
         user_not_exists_exc EXCEPTION;
                                  user_not_exists_exc_code CONSTANT NUMBER := -20007;
                                  
-                                 
+        customer_not_exists_exc EXCEPTION;
+                                customer_not_exists_exc_code CONSTANT NUMBER := -20008;
+           
                                  
                                  
 end pkg_error_messages;
@@ -48,6 +50,10 @@ create or replace package body pkg_error_messages is
            
         user_not_exists_exc EXCEPTION;
            PRAGMA EXCEPTION_INIT (user_not_exists_exc, -20007);
+           
+        customer_not_exists_exc EXCEPTION;
+           PRAGMA EXCEPTION_INIT (customer_not_exists_exc, -20008);
+        
            
             
 
