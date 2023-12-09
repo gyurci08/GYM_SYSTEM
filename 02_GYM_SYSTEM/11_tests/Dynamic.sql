@@ -1,0 +1,28 @@
+﻿
+
+DECLARE
+ID NUMBER;
+NAME VARCHAR2(50 CHAR);
+VAR_SQL VARCHAR2(250 CHAR);
+COMMAND VARCHAR2(250 CHAR);
+
+
+BEGIN
+   ID := 2;
+   NAME := 'Sanyi';
+   
+   COMMAND := ('1=1');
+   COMMAND := CONCAT(COMMAND,', P.FIRST_NAME='|| '''' || NAME || '''');
+   
+   VAR_SQL := ('UPDATE PEOPLE P SET ' || COMMAND || ' WHERE P.ID=' || ID);
+   
+   DBMS_OUTPUT.put_line(VAR_SQL);
+   
+   BEGIN
+           EXECUTE IMMEDIATE VAR_SQL;
+   END;
+   
+   
+
+END;
+

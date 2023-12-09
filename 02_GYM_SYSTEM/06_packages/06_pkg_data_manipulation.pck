@@ -17,6 +17,20 @@
 
 
 
+   FUNCTION IS_PRESENT_BY_ID_NM(
+                             VAR_TABLE_NAME               VARCHAR2
+                             ,VAR_SEARCH_IN               VARCHAR2
+                             ,VAR_TO_SEARCH               NUMBER
+                             ,VAR_RETURN_FROM             VARCHAR2
+                            )
+                           RETURN
+                           INTEGER;
+
+
+
+
+
+
   
   
   PROCEDURE insert_people(
@@ -65,6 +79,18 @@
   PROCEDURE remove_customer(
                       VAR_ID                   NUMBER
                             );
+
+
+
+ PROCEDURE update_customer(
+                            VAR_ID                    NUMBER
+                            ,VAR_FIRST_NAME           VARCHAR2 DEFAULT NULL
+                            ,VAR_LAST_NAME            VARCHAR2 DEFAULT NULL
+                            ,VAR_ADDRESS              VARCHAR2 DEFAULT NULL
+                            ,VAR_BIRTHDATE            DATE     DEFAULT NULL
+                            ,VAR_MS_LASTS             DATE     DEFAULT NULL
+                            );
+
 
 
 
@@ -142,6 +168,58 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
 
 
      
+
+ FUNCTION IS_PRESENT_BY_ID_NM(
+                             VAR_TABLE_NAME               VARCHAR2
+                             ,VAR_SEARCH_IN               VARCHAR2
+                             ,VAR_TO_SEARCH               NUMBER
+                             ,VAR_RETURN_FROM             VARCHAR2
+                            )
+                             RETURN
+                             INTEGER
+    IS
+    
+    VAR_SQL VARCHAR2(250 CHAR);
+    
+    
+     BEGIN
+           ID := null;
+           VAR_SQL := ('select ' || VAR_RETURN_FROM || ' from ' || VAR_TABLE_NAME || ' t where t.' || VAR_SEARCH_IN || '=' || VAR_TO_SEARCH);
+           BEGIN
+                execute immediate VAR_SQL into ID;
+                EXCEPTION
+                WHEN no_data_found
+                  THEN RETURN NULL;
+           END;
+
+          RETURN ID;             
+     END IS_PRESENT_BY_ID_NM;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -358,6 +436,27 @@ PROCEDURE insert_user(
 ---
 ----   END OF INSERT
 ---------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+----   START OF REMOVE
+---------------------------------------------------------------
+
+
 PROCEDURE remove_user(
                       VAR_WORKER_ID                   NUMBER
                             )
@@ -441,28 +540,6 @@ PROCEDURE remove_user(
     END remove_customer;
 
 
-
----
-----   START OF REMOVE
----------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ---
 ----   END OF REMOVE
 ---------------------------------------------------------------
@@ -482,14 +559,65 @@ PROCEDURE remove_user(
 
 
 
+---
+----   START OF UPDATE
+---------------------------------------------------------------
+ PROCEDURE update_customer(
+                            VAR_ID                    NUMBER
+                            ,VAR_FIRST_NAME           VARCHAR2 DEFAULT NULL
+                            ,VAR_LAST_NAME            VARCHAR2 DEFAULT NULL
+                            ,VAR_ADDRESS              VARCHAR2 DEFAULT NULL
+                            ,VAR_BIRTHDATE            DATE     DEFAULT NULL
+                            ,VAR_MS_LASTS             DATE     DEFAULT NULL
+                            )
+ IS
+ 
+ COMMAND VARCHAR2(250 CHAR);
+ VAR_SQL VARCHAR2(250 CHAR);
+ VAR_PEOPLE_ID NUMBER;
+ 
+ 
+ BEGIN
+      BEGIN
+            
+            VAR_PEOPLE_ID := IS_PRESENT_BY_ID_NM(
+                                     VAR_TABLE_NAME => 'customers'
+                                     ,VAR_SEARCH_IN => 'ID'
+                                     ,VAR_TO_SEARCH => VAR_ID
+                                     ,VAR_RETURN_FROM => 'PEOPLE_ID'
+                                     );
+                                     
+                                     
+            COMMAND := ('P.ID='||VAR_PEOPLE_ID);
+            
+            IF VAR_PEOPLE_ID IS NOT NULL -- THERE IS ID
+                    THEN
+                          IF VAR_FIRST_NAME IS NOT NULL
+                                THEN COMMAND := CONCAT(COMMAND,', P.FIRST_NAME='|| '''' || VAR_FIRST_NAME || ''''); 
+                          END IF;
+                          
+                          VAR_SQL := ('UPDATE PEOPLE P SET ' || COMMAND || ' WHERE P.ID=' || VAR_PEOPLE_ID);
+                          EXECUTE IMMEDIATE VAR_SQL;
+                            
+                    ELSE
+                          RAISE pkg_error_messages.customer_not_exists_exc;
+            END IF;
+            EXCEPTION
+                          WHEN pkg_error_messages.customer_not_exists_exc
+                               THEN raise_application_error(pkg_error_messages.customer_not_exists_exc_code,'The customer does NOT exists.');
+      END;
+ END update_customer;
+
+
+-- execute immediate 'select t.id from ' || VAR_TABLE_NAME || ' t where t.' || VAR_FIELD || '=' || VAR_ID into ID;
 
 
 
 
 
-
-
-
+---
+----   END OF UPDATE
+---------------------------------------------------------------
 
 
 

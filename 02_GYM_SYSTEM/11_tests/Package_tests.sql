@@ -17,6 +17,9 @@ BOOL := FALSE;
   --pkg_outside_control.remove_customer(228);
   
 
+
+  pkg_data_manipulation.update_customer( VAR_ID => 235,VAR_FIRST_NAME => N'György');
+
   
   
   commit;
