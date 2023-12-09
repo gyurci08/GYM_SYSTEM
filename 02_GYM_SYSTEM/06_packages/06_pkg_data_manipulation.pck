@@ -56,8 +56,13 @@
 END pkg_data_manipulation;
 /
 CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
+
+
    ID     NUMBER;
    bool   BOOLEAN;
+   
+   
+   
    
    FUNCTION IS_PRESENT_BY_NAME(
                            VAR_FIRST_NAME           VARCHAR2
@@ -127,20 +132,32 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
               THEN bool := TRUE;
            END IF;
            
-          RETURN bool;              
+          RETURN bool;             
      END IS_PRESENT_BY_ID;
 
 
 
 
 
+
+
+
+
+
+
+---
+----   START OF INSERT
+---------------------------------------------------------------
+
+
+
   
-  PROCEDURE insert_people(  VAR_ID NUMBER
-                            ,VAR_FIRST_NAME            VARCHAR2
+  PROCEDURE insert_people(  VAR_ID                    NUMBER
+                            ,VAR_FIRST_NAME           VARCHAR2
                             ,VAR_LAST_NAME            VARCHAR2
                             ,VAR_ADDRESS              VARCHAR2
                             ,VAR_BIRTHDATE            DATE
-                            ,VAR_new_id               OUT NUMBER
+                            ,VAR_new_id        OUT    NUMBER
                             )
       IS           
       BEGIN
@@ -167,6 +184,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
                            )
                values 
                            (VAR_ID, VAR_FIRST_NAME, VAR_LAST_NAME, VAR_ADDRESS, VAR_BIRTHDATE,'','','','','','');
+                           VAR_new_id := VAR_ID; 
            ELSE 
             RAISE pkg_error_messages.people_duplication_exc;
        
@@ -175,8 +193,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
       EXCEPTION
         WHEN pkg_error_messages.people_duplication_exc
           THEN raise_application_error('-20001','The person is already in the database.');
-      
-           VAR_new_id := ID;
       END insert_people;
 
 
@@ -195,7 +211,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
     bool := IS_PRESENT_BY_ID(
                  VAR_TABLE_NAME => 'people'
                  ,VAR_FIELD => 'ID'
-                 ,VAR_ID => VAR_PEOPLE_ID
+                 ,VAR_ID =>VAR_PEOPLE_ID
                            );
    BEGIN
     IF bool -- TRUE
@@ -331,6 +347,57 @@ PROCEDURE insert_user(
 
       VAR_NEW_ID := ID;
     END insert_user;
+
+
+
+---
+----   END OF INSERT
+---------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+---
+----   START OF REMOVE
+---------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+----   END OF REMOVE
+---------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
 
 
 

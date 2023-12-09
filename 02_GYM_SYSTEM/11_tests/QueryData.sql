@@ -41,5 +41,10 @@ select u.id,
        u.dml_flag,
        u.version,rowid from users u;
 
+select * from people_h;
+select * from customers_h;
+select * from workers_h;
+select * from users_h;
+
 
 commit;
