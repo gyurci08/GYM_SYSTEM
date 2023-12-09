@@ -40,6 +40,34 @@
                          VAR_ID                   NUMBER
                          );                     
                              
+                         
+                         
+                         
+  PROCEDURE update_customer(
+                            VAR_ID                    NUMBER
+                            ,VAR_FIRST_NAME           VARCHAR2 DEFAULT NULL
+                            ,VAR_LAST_NAME            VARCHAR2 DEFAULT NULL
+                            ,VAR_ADDRESS              VARCHAR2 DEFAULT NULL
+                            ,VAR_BIRTHDATE            DATE     DEFAULT NULL
+                            ,VAR_MS_LASTS             DATE     DEFAULT NULL
+                            );                      
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
+                         
                              
 end pkg_outside_control;
 /
@@ -149,6 +177,22 @@ create or replace package body pkg_outside_control is
     
     
     
+    
+    
+    
+    
+     PROCEDURE update_customer(
+                            VAR_ID                    NUMBER
+                            ,VAR_FIRST_NAME           VARCHAR2 DEFAULT NULL
+                            ,VAR_LAST_NAME            VARCHAR2 DEFAULT NULL
+                            ,VAR_ADDRESS              VARCHAR2 DEFAULT NULL
+                            ,VAR_BIRTHDATE            DATE     DEFAULT NULL
+                            ,VAR_MS_LASTS             DATE     DEFAULT NULL
+                            )
+     IS
+     BEGIN
+       pkg_data_manipulation.update_customer(VAR_ID, VAR_FIRST_NAME, VAR_LAST_NAME, VAR_ADDRESS, VAR_BIRTHDATE, VAR_MS_LASTS);
+     END update_customer;
     
     
     

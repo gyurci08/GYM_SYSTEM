@@ -1,12 +1,9 @@
 ﻿DECLARE
 
-BOOL BOOLEAN;
-ID NUMBER;
 
 
 
 BEGIN
-BOOL := FALSE;
 
   --pkg_outside_control.ADD_CUSTOMER(N'György',N'Jandzsó',N'7621, Pécs, Nagy Imre út 2.',to_date('2000-12-28', 'yyyy-mm-dd'),to_date('2023-12-22', 'yyyy-mm-dd'));
   --pkg_outside_control.ADD_WORKER(N'György',N'Jandzsó',N'7621, Pécs, Nagy Imre út 2',to_date('2000-12-28', 'yyyy-mm-dd'));
@@ -16,10 +13,7 @@ BOOL := FALSE;
   --pkg_outside_control.remove_worker(234);
   --pkg_outside_control.remove_customer(228);
   
-
-
-  pkg_data_manipulation.update_customer( VAR_ID => 235,VAR_FIRST_NAME => N'György');
-
+  --pkg_data_manipulation.update_customer( VAR_ID => 1,VAR_LAST_NAME => N'Jandzsó' ,VAR_MS_LASTS => to_date('2023-01-08', 'yyyy-mm-dd'));
   
   
   commit;

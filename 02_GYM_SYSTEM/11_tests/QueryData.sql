@@ -51,4 +51,7 @@ select * from vw_customers;
 select * from vw_workers;
 select * from vw_users;
 
+
+
+
 commit;

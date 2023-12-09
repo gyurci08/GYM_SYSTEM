@@ -572,8 +572,12 @@ PROCEDURE remove_user(
                             )
  IS
  
- COMMAND VARCHAR2(250 CHAR);
- VAR_SQL VARCHAR2(250 CHAR);
+ COMMAND_PEOPLE VARCHAR2(250 CHAR);
+ COMMAND_CUSTOMERS VARCHAR2(250 CHAR);
+  
+ VAR_SQL_PEOPLE VARCHAR2(250 CHAR);
+ VAR_SQL_CUSTOMERS VARCHAR2(250 CHAR);
+ 
  VAR_PEOPLE_ID NUMBER;
  
  
@@ -588,16 +592,36 @@ PROCEDURE remove_user(
                                      );
                                      
                                      
-            COMMAND := ('P.ID='||VAR_PEOPLE_ID);
+            COMMAND_PEOPLE := ('P.ID=' || VAR_PEOPLE_ID);
+            COMMAND_CUSTOMERS := ('C.ID=' || VAR_ID);
             
             IF VAR_PEOPLE_ID IS NOT NULL -- THERE IS ID
                     THEN
                           IF VAR_FIRST_NAME IS NOT NULL
-                                THEN COMMAND := CONCAT(COMMAND,', P.FIRST_NAME='|| '''' || VAR_FIRST_NAME || ''''); 
+                                THEN COMMAND_PEOPLE := CONCAT(COMMAND_PEOPLE,', P.FIRST_NAME='|| '''' || VAR_FIRST_NAME || ''''); 
                           END IF;
                           
-                          VAR_SQL := ('UPDATE PEOPLE P SET ' || COMMAND || ' WHERE P.ID=' || VAR_PEOPLE_ID);
-                          EXECUTE IMMEDIATE VAR_SQL;
+                          IF VAR_LAST_NAME IS NOT NULL
+                                THEN COMMAND_PEOPLE := CONCAT(COMMAND_PEOPLE,', P.LAST_NAME='|| '''' || VAR_LAST_NAME || ''''); 
+                          END IF;
+                          
+                          IF VAR_ADDRESS IS NOT NULL
+                                THEN COMMAND_PEOPLE := CONCAT(COMMAND_PEOPLE,', P.ADDRESS='|| '''' || VAR_ADDRESS || ''''); 
+                          END IF;
+                          
+                          IF VAR_BIRTHDATE IS NOT NULL
+                                THEN COMMAND_PEOPLE := CONCAT(COMMAND_PEOPLE,', P.BIRTHDATE='|| '''' || VAR_BIRTHDATE || ''''); 
+                          END IF;
+                          
+                          IF VAR_MS_LASTS IS NOT NULL
+                                THEN COMMAND_CUSTOMERS := CONCAT(COMMAND_CUSTOMERS,', C.MS_LASTS='|| '''' || VAR_MS_LASTS || '''');
+                          END IF;
+                          
+                          VAR_SQL_CUSTOMERS:=('UPDATE CUSTOMERS C SET ' || COMMAND_CUSTOMERS || ' WHERE C.ID=' || VAR_ID);
+                          EXECUTE IMMEDIATE VAR_SQL_CUSTOMERS;
+                          
+                          VAR_SQL_PEOPLE := ('UPDATE PEOPLE P SET ' || COMMAND_PEOPLE || ' WHERE P.ID=' || VAR_PEOPLE_ID);
+                          EXECUTE IMMEDIATE VAR_SQL_PEOPLE;
                             
                     ELSE
                           RAISE pkg_error_messages.customer_not_exists_exc;
