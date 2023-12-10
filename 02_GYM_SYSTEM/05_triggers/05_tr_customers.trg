@@ -13,7 +13,6 @@ BEGIN
     THEN
       :new.bar_code := bar_code_seq.nextval;
     END IF;
-  
     
     :new.creator_user  := sys_context('USERENV', 'OS_USER');
     :new.created_at   := systimestamp;
