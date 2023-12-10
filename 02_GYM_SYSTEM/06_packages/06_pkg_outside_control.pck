@@ -50,10 +50,10 @@
                             ,VAR_ADDRESS              VARCHAR2 DEFAULT NULL
                             ,VAR_BIRTHDATE            DATE     DEFAULT NULL
                             ,VAR_MS_LASTS             DATE     DEFAULT NULL
-                            );                      
-                         
-                         
-                         
+                            );
+                            
+                            
+       
                          
                          
                          
@@ -196,9 +196,7 @@ create or replace package body pkg_outside_control is
     
     
     
-    
-    
-    
+
     
     
 end pkg_outside_control;

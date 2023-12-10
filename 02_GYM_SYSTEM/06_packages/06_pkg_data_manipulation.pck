@@ -94,6 +94,8 @@
 
 
 
+
+
 END pkg_data_manipulation;
 /
 CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
@@ -642,6 +644,36 @@ PROCEDURE remove_user(
 ---
 ----   END OF UPDATE
 ---------------------------------------------------------------
+
+
+
+---
+----   START OF QUERY
+---------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+---
+----   END OF QUERY
+---------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
 
 
 

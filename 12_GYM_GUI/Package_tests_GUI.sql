@@ -12,7 +12,7 @@ BEGIN
   --GYM_SYSTEM.pkg_outside_control.remove_customer(238);
   
   
-  GYM_SYSTEM.PKG_OUTSIDE_CONTROL.update_customer( VAR_ID => 239,VAR_LAST_NAME => N'Jandzsó' ,VAR_MS_LASTS => to_date('2024-01-08', 'yyyy-mm-dd'));
+  --GYM_SYSTEM.PKG_OUTSIDE_CONTROL.update_customer( VAR_ID => 239,VAR_LAST_NAME => N'Jandzsó' ,VAR_MS_LASTS => to_date('2024-01-08', 'yyyy-mm-dd'));
   
   
   
