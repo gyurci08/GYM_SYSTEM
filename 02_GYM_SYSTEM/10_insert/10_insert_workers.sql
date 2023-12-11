@@ -4,10 +4,12 @@ BEGIN
   pkg_outside_control.ADD_WORKER(N'Lajos',N'Kis',N'7621, Pécs, Nagy Sándor út 3',to_date('2001-02-08', 'yyyy-mm-dd'));
   pkg_outside_control.ADD_WORKER(N'Réka',N'Nagy',N'7621, Pécs, Nagy Sándor út 4',to_date('2002-10-18', 'yyyy-mm-dd'));
   pkg_outside_control.ADD_WORKER(N'Borbála',N'Kovács',N'7621, Pécs, Nagy Sándor út 5',to_date('2002-05-11', 'yyyy-mm-dd'));
-  
+  EXCEPTION
+            WHEN pkg_error_messages.worker_duplication_exc
+                THEN NULL;
   commit;
 
-end;
+END;
 
 
 

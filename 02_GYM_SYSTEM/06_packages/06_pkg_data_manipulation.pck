@@ -107,7 +107,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
    
    
    
-   FUNCTION IS_PRESENT_BY_NAME(                                 -- Should be depracated as birthday is private information
+   FUNCTION IS_PRESENT_BY_NAME(                                 -- Should be depracated a
                            VAR_FIRST_NAME           VARCHAR2
                            ,VAR_LAST_NAME           VARCHAR2
                            ,VAR_BIRTHDATE           DATE

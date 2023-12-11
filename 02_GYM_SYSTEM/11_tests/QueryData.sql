@@ -1,4 +1,4 @@
-﻿select t.id,
+select t.id,
        t.first_name,
        t.last_name,
        t.address,

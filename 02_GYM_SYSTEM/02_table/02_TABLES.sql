@@ -17,8 +17,8 @@ CREATE TABLE users -- Webalkalmazás-felhasználók ( beléptetés, bérlet-kezelés )
 (
   ID            NUMBER                PRIMARY KEY,
   WORKER_ID     NUMBER                NOT NULL,
-  USERNAME      VARCHAR2(50 CHAR),
-  PASSWORD      VARCHAR2(100 CHAR),
+  USERNAME      VARCHAR2(120 CHAR),
+  PASSWORD      VARCHAR2(120 CHAR),
   CREATOR_USER  VARCHAR2(50 CHAR)     NULL,                       
   CREATED_AT    TIMESTAMP(6)          NULL,                           
   MOD_USER      VARCHAR2(50 CHAR)     NULL,                     
