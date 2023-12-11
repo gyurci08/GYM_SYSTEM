@@ -1,0 +1,4 @@
+# Git will ignore these files
+
+# Backup file
+*.~pck
