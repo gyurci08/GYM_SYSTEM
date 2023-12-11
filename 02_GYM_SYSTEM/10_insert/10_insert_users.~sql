@@ -1,5 +1,7 @@
 --------------------------------- Users
 -- It can be run after workers has data
+
+/*
 BEGIN
       FOR c IN (SELECT 'pkg_outside_control.ADD_USER(''' || w.id || ''',N''' || LOWER(CONCAT(CONCAT(p.first_name,p.last_name),w.id))
          ||''',' || '''673fae34f8de3f5c68a27d2c3a9cb020'')' AS COMMAND
@@ -18,9 +20,12 @@ BEGIN
       END LOOP;
 END;
 /
+*/
 
-
-
+BEGIN
+  pkg_outside_control.ADD_USER('9',N'györgyjandzsó9','673fae34f8de3f5c68a27d2c3a9cb020');
+  COMMIT;
+END;
 
 
 

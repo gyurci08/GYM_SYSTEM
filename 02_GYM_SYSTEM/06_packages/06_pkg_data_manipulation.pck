@@ -107,7 +107,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
    
    
    
-   FUNCTION IS_PRESENT_BY_NAME(
+   FUNCTION IS_PRESENT_BY_NAME(                                 -- Should be depracated as birthday is private information
                            VAR_FIRST_NAME           VARCHAR2
                            ,VAR_LAST_NAME           VARCHAR2
                            ,VAR_BIRTHDATE           DATE
@@ -260,15 +260,9 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
                             ,LAST_NAME
                             ,ADDRESS
                             ,BIRTHDATE
-                            ,CREATOR_USER
-                            ,CREATED_AT
-                            ,MOD_USER
-                            ,MOD_TIME
-                            ,DML_FLAG
-                            ,VERSION
                            )
                values 
-                           (VAR_ID, VAR_FIRST_NAME, VAR_LAST_NAME, VAR_ADDRESS, VAR_BIRTHDATE,'','','','','',''); 
+                           (VAR_ID, VAR_FIRST_NAME, VAR_LAST_NAME, VAR_ADDRESS, VAR_BIRTHDATE); 
                            VAR_new_id := VAR_ID;
            ELSE 
             ---RAISE pkg_error_messages.people_duplication_exc; // To implement that a a worker could be also a customer.
@@ -633,9 +627,6 @@ PROCEDURE remove_user(
                                THEN raise_application_error(pkg_error_messages.customer_not_exists_exc_code,'The customer does NOT exists.');
       END;
  END update_customer;
-
-
--- execute immediate 'select t.id from ' || VAR_TABLE_NAME || ' t where t.' || VAR_FIELD || '=' || VAR_ID into ID;
 
 
 
