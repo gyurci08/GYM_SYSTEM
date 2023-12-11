@@ -10,9 +10,9 @@ BEGIN
         BEGIN
                 EXECUTE IMMEDIATE c.command;
                 
-                /*EXCEPTION
+                EXCEPTION
                   WHEN pkg_error_messages.user_duplication_exc
-                       THEN NULL;*/
+                       THEN NULL;
         END;
         
       END LOOP;

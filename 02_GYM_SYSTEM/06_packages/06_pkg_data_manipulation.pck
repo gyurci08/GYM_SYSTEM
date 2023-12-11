@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE PACKAGE pkg_data_manipulation IS
+CREATE OR REPLACE PACKAGE pkg_data_manipulation IS
    FUNCTION IS_PRESENT_BY_NAME(
                             VAR_FIRST_NAME          VARCHAR2
                            ,VAR_LAST_NAME           VARCHAR2
@@ -271,7 +271,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
                            (VAR_ID, VAR_FIRST_NAME, VAR_LAST_NAME, VAR_ADDRESS, VAR_BIRTHDATE,'','','','','',''); 
                            VAR_new_id := VAR_ID;
            ELSE 
-            ---RAISE pkg_error_messages.people_duplication_exc;
+            ---RAISE pkg_error_messages.people_duplication_exc; // To implement that a a worker could be also a customer.
             NULL;
       END IF;
 
@@ -311,9 +311,9 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
         IF NOT bool -- FALSE
           THEN
              insert into customers
-                     (ID,PEOPLE_ID,BAR_CODE,MS_LASTS,CREATOR_USER,CREATED_AT,MOD_USER,MOD_TIME,DML_FLAG,VERSION)
+                     (ID,PEOPLE_ID,BAR_CODE,MS_LASTS)
                values 
-                     (VAR_ID, VAR_PEOPLE_ID,'',VAR_MS_LASTS, '', '', '','','','');
+                     (VAR_ID, VAR_PEOPLE_ID,'',VAR_MS_LASTS);
           ELSE 
             RAISE pkg_error_messages.customer_duplication_exc;
         END IF;
@@ -360,9 +360,9 @@ END insert_customer;
             IF NOT bool -- FALSE
                 THEN
                 insert into workers
-                    (ID,PEOPLE_ID,CREATOR_USER,CREATED_AT,MOD_USER,MOD_TIME,DML_FLAG,VERSION)
+                    (ID,PEOPLE_ID)
                     values 
-                    (VAR_ID, VAR_PEOPLE_ID,'','', '', '', '','');
+                    (VAR_ID, VAR_PEOPLE_ID);
               ELSE 
                 RAISE pkg_error_messages.worker_duplication_exc;
             END IF;
@@ -413,9 +413,9 @@ PROCEDURE insert_user(
         IF NOT bool -- FALSE
           THEN
           insert into users
-            (ID,WORKER_ID,USERNAME,PASSWORD,CREATOR_USER,CREATED_AT,MOD_USER,MOD_TIME,DML_FLAG,VERSION)
+            (ID,WORKER_ID,USERNAME,PASSWORD)
             values 
-            (VAR_ID, VAR_WORKER_ID,VAR_USERNAME,VAR_PASSWORD,'','', '', '', '','');
+            (VAR_ID, VAR_WORKER_ID,VAR_USERNAME,VAR_PASSWORD);
           ELSE 
           RAISE pkg_error_messages.user_duplication_exc;
         END IF;

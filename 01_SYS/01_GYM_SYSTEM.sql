@@ -1,5 +1,5 @@
 
--- GYM SYSTEM USER (SCHEMA)
+-- GYM_SYSTEM USER (SCHEMA)
 ------------------------------------------------------------------------------------------------------
 BEGIN
   FOR c IN (SELECT 'ALTER SYSTEM KILL SESSION ''' || sid || ',' || serial# || ''' IMMEDIATE' AS command
@@ -41,35 +41,3 @@ GRANT CREATE TRIGGER to GYM_SYSTEM;
 
 
 
-
--- GYM GUI USER (CLIENT)
-------------------------------------------------------------------------------------------------------
-BEGIN
-  FOR c IN (SELECT 'ALTER SYSTEM KILL SESSION ''' || sid || ',' || serial# || ''' IMMEDIATE' AS command
-      FROM v$session
-     WHERE username = 'GYM_GUI')
-  LOOP
-    EXECUTE IMMEDIATE c.command;
-  END LOOP;
-END;
-/
-
-DECLARE
-  l_cnt NUMBER;
-BEGIN
-  SELECT COUNT(*) INTO l_cnt FROM dba_users t WHERE t.username = 'GYM_GUI';
-  IF l_cnt=1 THEN 
-    EXECUTE IMMEDIATE 'DROP USER GYM_GUI CASCADE';
-  END IF;
-END;
-/
-CREATE USER GYM_GUI 
-  IDENTIFIED BY 12345678
-  DEFAULT TABLESPACE USERS
-;
-
-GRANT CREATE SESSION TO GYM_GUI;
-GRANT SELECT ON GYM_SYSTEM.vw_users TO GYM_GUI;
-GRANT SELECT ON GYM_SYSTEM.vw_workers TO GYM_GUI;
-GRANT SELECT ON GYM_SYSTEM.vw_customers TO GYM_GUI;
-GRANT EXECUTE on GYM_SYSTEM.pkg_outside_control to GYM_GUI;
