@@ -18,5 +18,5 @@ FROM people p INNER JOIN workers w ON p.id=w.people_id INNER JOIN users u ON w.i
 
 CREATE OR REPLACE VIEW vw_attendances AS
 SELECT
-a.id, p.first_name, p.last_name, a.type_of_att, a.created_at, a.origin
-FROM people p INNER JOIN attendances a ON p.id=a.people_id INNER JOIN attendances a ON p.id=a.people_id;
+a.id, p.first_name, p.last_name, a.type_of_att, a.created_at AS "TIME", a.origin
+FROM people p INNER JOIN attendances a ON p.id=a.people_id;

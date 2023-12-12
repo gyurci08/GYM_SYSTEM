@@ -468,7 +468,7 @@ PROCEDURE insert_user(
                    ,VAR_ID => VAR_PEOPLE_ID
                   );
                   
-      IF not bool -- IF there is no ID with that (just in case)
+      IF not bool -- IF there is ID with that (just in case)
          THEN 
               INSERT INTO ATTENDANCES(ID,
                                       PEOPLE_ID,
