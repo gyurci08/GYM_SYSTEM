@@ -2,7 +2,7 @@ CREATE OR REPLACE PACKAGE pkg_data_manipulation IS
    FUNCTION IS_PRESENT_BY_NAME(
                             VAR_FIRST_NAME          VARCHAR2
                            ,VAR_LAST_NAME           VARCHAR2
-                           ,VAR_BIRTHDATE           DATE
+                           ,VAR_CREATED_AT          TIMESTAMP
                             )
                            RETURN
                            INTEGER;
@@ -107,10 +107,10 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
    
    
    
-   FUNCTION IS_PRESENT_BY_NAME(                                 -- Should be depracated a
+   FUNCTION IS_PRESENT_BY_NAME(                                 -- Should be depracated
                            VAR_FIRST_NAME           VARCHAR2
                            ,VAR_LAST_NAME           VARCHAR2
-                           ,VAR_BIRTHDATE           DATE
+                           ,VAR_CREATED_AT          TIMESTAMP
                             )
                            RETURN
                            INTEGER                   
@@ -122,7 +122,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
           WHERE 
                  p.last_name = VAR_LAST_NAME
           AND    p.first_name = VAR_FIRST_NAME
-          AND    p.birthdate = VAR_BIRTHDATE;
+          AND    p.CREATED_AT = VAR_CREATED_AT;
           
         
      BEGIN
@@ -246,10 +246,11 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
                             )
       IS           
       BEGIN
-        VAR_new_id := IS_PRESENT_BY_NAME(
-                           VAR_FIRST_NAME => VAR_FIRST_NAME
-                           ,VAR_LAST_NAME => VAR_LAST_NAME
-                           ,VAR_BIRTHDATE => VAR_BIRTHDATE  
+        VAR_new_id := IS_PRESENT_BY_ID_NM(
+                             VAR_TABLE_NAME      => 'PEOPLE'
+                             ,VAR_SEARCH_IN      => 'ID'
+                             ,VAR_TO_SEARCH      => VAR_ID
+                             ,VAR_RETURN_FROM    => 'ID'
                            );
         IF VAR_new_id IS NULL -- THERE IS NO ID FROM RECORD
            THEN
