@@ -1,4 +1,4 @@
-select t.id,
+﻿select t.id,
        t.first_name,
        t.last_name,
        t.address,
@@ -40,6 +40,16 @@ select u.id,
        u.mod_time,
        u.dml_flag,
        u.version,rowid from users u;
+       
+ SELECT A.ID,
+        A.PEOPLE_ID,
+        A.TYPE_OF_ATT,
+        A.ORIGIN,
+        A.CREATOR_USER,
+        A.CREATED_AT
+        ,rowid FROM ATTENDANCES A;
+
+
 
 select * from people_h;
 select * from customers_h;
@@ -50,7 +60,7 @@ select * from users_h;
 select * from vw_customers;
 select * from vw_workers;
 select * from vw_users;
-
+select * from vw_attendances;
 
 
 

@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE pkg_data_manipulation IS
+﻿CREATE OR REPLACE PACKAGE pkg_data_manipulation IS
    FUNCTION IS_PRESENT_BY_NAME(
                             VAR_FIRST_NAME          VARCHAR2
                            ,VAR_LAST_NAME           VARCHAR2
@@ -65,6 +65,27 @@ CREATE OR REPLACE PACKAGE pkg_data_manipulation IS
                             );
 
 
+  PROCEDURE insert_attendance(
+                            VAR_ID                   NUMBER
+                            ,VAR_PEOPLE_ID           NUMBER
+                            ,VAR_TYPE_OF_ATT         VARCHAR2
+                            ,VAR_ORIGIN              VARCHAR2
+                            ,VAR_NEW_ID       OUT    NUMBER
+                            );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   PROCEDURE remove_user(
                       VAR_WORKER_ID                   NUMBER
                             );
@@ -107,8 +128,8 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
    
    
    
-   FUNCTION IS_PRESENT_BY_NAME(                                 -- Should be depracated a
-                           VAR_FIRST_NAME           VARCHAR2
+   FUNCTION IS_PRESENT_BY_NAME(                                     -- Should be depracated as BIRTHDATE is not a gym-membership related data
+                           VAR_FIRST_NAME           VARCHAR2        --  also it makes unavailable to exists 2 person with same name and birthdate
                            ,VAR_LAST_NAME           VARCHAR2
                            ,VAR_BIRTHDATE           DATE
                             )
@@ -141,8 +162,8 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
 
 
 
-  FUNCTION IS_PRESENT_BY_ID(
-                             VAR_TABLE_NAME               VARCHAR2
+  FUNCTION IS_PRESENT_BY_ID(                                                                  -- Should be updated as DYNAMIC SQL is NOT to be used like this                     
+                             VAR_TABLE_NAME               VARCHAR2                            -- ONLY for user query where the need is unpredictable 
                              ,VAR_FIELD                   VARCHAR2
                              ,VAR_ID                      NUMBER
                             )
@@ -171,8 +192,8 @@ CREATE OR REPLACE PACKAGE BODY pkg_data_manipulation IS
 
      
 
- FUNCTION IS_PRESENT_BY_ID_NM(
-                             VAR_TABLE_NAME               VARCHAR2
+ FUNCTION IS_PRESENT_BY_ID_NM(                                                             -- Should be updated as DYNAMIC SQL is NOT to be used like this 
+                             VAR_TABLE_NAME               VARCHAR2                         -- ONLY for user query where the need is unpredictable 
                              ,VAR_SEARCH_IN               VARCHAR2
                              ,VAR_TO_SEARCH               NUMBER
                              ,VAR_RETURN_FROM             VARCHAR2
@@ -426,6 +447,62 @@ PROCEDURE insert_user(
 
       VAR_NEW_ID := ID;
     END insert_user;
+
+
+
+
+
+
+  PROCEDURE insert_attendance(
+                            VAR_ID                   NUMBER
+                            ,VAR_PEOPLE_ID           NUMBER
+                            ,VAR_TYPE_OF_ATT         VARCHAR2
+                            ,VAR_ORIGIN              VARCHAR2
+                            ,VAR_NEW_ID       OUT    NUMBER
+                            )
+  IS
+  BEGIN
+      bool := IS_PRESENT_BY_ID(
+                   VAR_TABLE_NAME => 'ATTENDANCES'
+                   ,VAR_FIELD => 'ID'
+                   ,VAR_ID => VAR_PEOPLE_ID
+                  );
+                  
+      IF not bool -- IF there is no ID with that (just in case)
+         THEN 
+              INSERT INTO ATTENDANCES(ID,
+                                      PEOPLE_ID,
+                                      TYPE_OF_ATT,
+                                      ORIGIN
+                                      )
+                               VALUES(
+                                      VAR_ID
+                                      ,VAR_PEOPLE_ID
+                                      ,VAR_TYPE_OF_ATT
+                                      ,VAR_ORIGIN
+                                       );
+              VAR_NEW_ID := VAR_ID;
+         ELSE 
+              RAISE pkg_error_messages.attendance_duplication_exc;
+     END IF;
+     EXCEPTION
+       WHEN pkg_error_messages.attendance_duplication_exc
+         THEN raise_application_error(pkg_error_messages.attendance_duplication_exc_c,'The attendence ID is already exists.');
+     
+  END insert_attendance;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

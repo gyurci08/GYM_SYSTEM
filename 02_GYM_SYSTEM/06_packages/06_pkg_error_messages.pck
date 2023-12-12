@@ -1,4 +1,4 @@
-create or replace package pkg_error_messages is
+﻿create or replace package pkg_error_messages is
         
         people_duplication_exc   EXCEPTION;
                                  people_duplication_exc_code CONSTANT NUMBER := -20001;
@@ -30,8 +30,12 @@ create or replace package pkg_error_messages is
                                  
         customer_not_exists_exc EXCEPTION;
                                 customer_not_exists_exc_code CONSTANT NUMBER := -20008;
-                                PRAGMA EXCEPTION_INIT (customer_not_exists_exc, -20008);
-                                 
+                                PRAGMA EXCEPTION_INIT (customer_not_exists_exc, -20008);  
+        
+        attendance_duplication_exc EXCEPTION;
+                                attendance_duplication_exc_c CONSTANT NUMBER := -20009;
+                                PRAGMA EXCEPTION_INIT (attendance_duplication_exc, -20008);
+                                
                                  
 end pkg_error_messages;
 /

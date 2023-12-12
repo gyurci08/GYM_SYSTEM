@@ -32,7 +32,7 @@ CREATE TABLE ATTENDANCES(
   ID            INTEGER               PRIMARY KEY
   ,PEOPLE_ID     INTEGER               NOT NULL
   ,TYPE_OF_ATT   VARCHAR2(50 CHAR)     NOT NULL        -- CHECK_IN / CHECK_OUT
-  ,ORIGIN        VARCHAR2(50 CHAR)     NOT NULL
+  ,ORIGIN        VARCHAR2(50 CHAR)     NOT NULL        -- This is extra information, which can be used if workers had bar_code too ( future ). Ex. data: CUSTOMER 
   ,CREATOR_USER  VARCHAR2(50 CHAR)     NULL 
   ,CREATED_AT    TIMESTAMP             NULL                 
   ,MOD_USER      VARCHAR2(50 CHAR)     NULL                
