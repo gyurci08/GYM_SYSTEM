@@ -34,7 +34,7 @@
         
         attendance_duplication_exc EXCEPTION;
                                 attendance_duplication_exc_c CONSTANT NUMBER := -20009;
-                                PRAGMA EXCEPTION_INIT (attendance_duplication_exc, -20008);
+                                PRAGMA EXCEPTION_INIT (attendance_duplication_exc, -20009);
                                 
                                  
 end pkg_error_messages;
