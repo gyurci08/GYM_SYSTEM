@@ -31,7 +31,8 @@ CREATE TABLE users -- Webalkalmazás-felhasználók ( beléptetés, bérlet-keze
 CREATE TABLE ATTENDANCES(
   ID            INTEGER               PRIMARY KEY
   ,PEOPLE_ID     INTEGER               NOT NULL
-  ,TYPE_OF_ATT   VARHCAR2(50 CHAR)     NOT NULL        -- CHECK_IN / CHECK_OUT
+  ,TYPE_OF_ATT   VARCHAR2(50 CHAR)     NOT NULL        -- CHECK_IN / CHECK_OUT
+  ,CREATOR_USER  VARCHAR2(50 CHAR)     NULL 
   ,CREATED_AT    TIMESTAMP             NULL                 
   ,MOD_USER      VARCHAR2(50 CHAR)     NULL                
   ,MOD_TIME      TIMESTAMP             NULL                 
@@ -57,6 +58,8 @@ CREATE TABLE workers
 ) TABLESPACE users;
 
 
+
+
 CREATE TABLE customers 
 (
   ID            NUMBER                PRIMARY KEY,
@@ -70,10 +73,6 @@ CREATE TABLE customers
   DML_FLAG      CHAR(1)               NULL,                               
   VERSION       NUMBER                NULL                                                           
 ) TABLESPACE users;
-
-
-
-
 
 
 
@@ -131,3 +130,17 @@ CREATE TABLE customers_h
   DML_FLAG      CHAR(1)               NULL,                               
   VERSION       NUMBER                NULL                                         
 ) TABLESPACE users;
+
+CREATE TABLE ATTENDANCES_H(
+  ID            INTEGER               
+  ,PEOPLE_ID     INTEGER               
+  ,TYPE_OF_ATT   VARCHAR2(50 CHAR)            -- CHECK_IN / CHECK_OUT
+  ,CREATOR_USER  VARCHAR2(50 CHAR)     NULL    
+  ,CREATED_AT    TIMESTAMP             NULL                 
+  ,MOD_USER      VARCHAR2(50 CHAR)     NULL                
+  ,MOD_TIME      TIMESTAMP             NULL                 
+  ,DML_FLAG      CHAR(1)               NULL                  
+  ,VERSION       NUMBER                NULL       
+)
+TABLESPACE USERS
+;
