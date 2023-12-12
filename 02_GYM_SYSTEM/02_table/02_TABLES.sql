@@ -1,19 +1,19 @@
-CREATE TABLE people
+ÔªøCREATE TABLE people
 (
   ID            NUMBER                PRIMARY KEY,
   FIRST_NAME    VARCHAR2(50 CHAR)     NOT NULL,
   LAST_NAME     VARCHAR2(50 CHAR)     NOT NULL,
   ADDRESS       VARCHAR2(250 CHAR)    NULL,
   BIRTHDATE     DATE                  NULL,
-  CREATOR_USER  VARCHAR2(50 CHAR)     NULL,                       -- KI K…SZÕTETTE
-  CREATED_AT    TIMESTAMP(6)          NULL,                            -- MIKOR K…SZ‹LT
-  MOD_USER      VARCHAR2(50 CHAR)     NULL,                       -- KI M”DOSÕTOTTA
-  MOD_TIME      TIMESTAMP(6)          NULL,                            -- MIKOR M”DOSULT
+  CREATOR_USER  VARCHAR2(50 CHAR)     NULL,                       -- KI K√âSZ√çTETTE
+  CREATED_AT    TIMESTAMP(6)          NULL,                            -- MIKOR K√âSZ√úLT
+  MOD_USER      VARCHAR2(50 CHAR)     NULL,                       -- KI M√ìDOS√çTOTTA
+  MOD_TIME      TIMESTAMP(6)          NULL,                            -- MIKOR M√ìDOSULT
   DML_FLAG      CHAR(1)               NULL,                                 -- D, I
-  VERSION       NUMBER                NULL                                    -- HANYADIK M”DOSÕT¡S
+  VERSION       NUMBER                NULL                                    -- HANYADIK M√ìDOS√çT√ÅS
 ) TABLESPACE users;
 
-CREATE TABLE users -- Webalkalmaz·s-felhaszn·lÛk ( belÈptetÈs, bÈrlet-kezelÈs )
+CREATE TABLE users -- Webalkalmaz√°s-felhaszn√°l√≥k ( bel√©ptet√©s, b√©rlet-kezel√©s )
 (
   ID            NUMBER                PRIMARY KEY,
   WORKER_ID     NUMBER                NOT NULL,
@@ -26,6 +26,23 @@ CREATE TABLE users -- Webalkalmaz·s-felhaszn·lÛk ( belÈptetÈs, bÈrlet-kezelÈs )
   DML_FLAG      CHAR(1)               NULL,                               
   VERSION       NUMBER                NULL                                                 
 ) TABLESPACE users;
+
+
+CREATE TABLE ATTENDANCES(
+  ID            INTEGER               PRIMARY KEY
+  ,PEOPLE_ID     INTEGER               NOT NULL
+  ,TYPE_OF_ATT   VARHCAR2(50 CHAR)     NOT NULL        -- CHECK_IN / CHECK_OUT
+  ,CREATED_AT    TIMESTAMP             NULL                 
+  ,MOD_USER      VARCHAR2(50 CHAR)     NULL                
+  ,MOD_TIME      TIMESTAMP             NULL                 
+  ,DML_FLAG      CHAR(1)               NULL                  
+  ,VERSION       NUMBER                NULL       
+)
+TABLESPACE USERS
+;
+
+
+
 
 CREATE TABLE workers 
 (
@@ -44,7 +61,7 @@ CREATE TABLE customers
 (
   ID            NUMBER                PRIMARY KEY,
   PEOPLE_ID     NUMBER                NOT NULL,
-  BAR_CODE      VARCHAR2(50 CHAR)     UNIQUE NOT NULL,         -- VonalkÛd a belÈptetÈsnÈl (k·rtya)
+  BAR_CODE      VARCHAR2(50 CHAR)     UNIQUE NOT NULL,         -- Vonalk√≥d a bel√©ptet√©sn√©l (k√°rtya)
   MS_LASTS      DATE,         
   CREATOR_USER  VARCHAR2(50 CHAR)     NULL,                       
   CREATED_AT    TIMESTAMP(6)          NULL,                           
@@ -75,7 +92,7 @@ CREATE TABLE people_h
   VERSION       NUMBER                NULL                                                            
 ) TABLESPACE users;
 
-CREATE TABLE users_h -- Webalkalmaz·s-felhaszn·lÛk ( belÈptetÈs, bÈrlet-kezelÈs )
+CREATE TABLE users_h -- Webalkalmaz√°s-felhaszn√°l√≥k ( bel√©ptet√©s, b√©rlet-kezel√©s )
 (
   ID            NUMBER,               
   WORKER_ID     NUMBER,               
