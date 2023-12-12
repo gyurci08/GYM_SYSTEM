@@ -43,6 +43,7 @@ IF deleting
       (id
       ,people_id
       ,TYPE_OF_ATT
+      ,ORIGIN
       ,created_at
       ,creator_user
       ,mod_user
@@ -54,6 +55,7 @@ IF deleting
        :old.id
       ,:old.people_id
       ,:old.TYPE_OF_ATT
+      ,:old.ORIGIN
       ,:old.created_at
       ,:old.creator_user
       ,v_mod_user
@@ -69,6 +71,7 @@ IF deleting
       id
       ,people_id
       ,TYPE_OF_ATT
+      ,ORIGIN
       ,created_at
       ,creator_user
       ,mod_user
@@ -80,6 +83,7 @@ IF deleting
       (:new.id
       ,:new.people_id
       ,:new.TYPE_OF_ATT
+      ,:new.ORIGIN
       ,:new.created_at
       ,:new.creator_user
       ,:new.mod_user

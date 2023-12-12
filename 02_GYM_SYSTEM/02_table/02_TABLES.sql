@@ -32,6 +32,7 @@ CREATE TABLE ATTENDANCES(
   ID            INTEGER               PRIMARY KEY
   ,PEOPLE_ID     INTEGER               NOT NULL
   ,TYPE_OF_ATT   VARCHAR2(50 CHAR)     NOT NULL        -- CHECK_IN / CHECK_OUT
+  ,ORIGIN        VARCHAR2(50 CHAR)     NOT NULL
   ,CREATOR_USER  VARCHAR2(50 CHAR)     NULL 
   ,CREATED_AT    TIMESTAMP             NULL                 
   ,MOD_USER      VARCHAR2(50 CHAR)     NULL                
@@ -135,6 +136,7 @@ CREATE TABLE ATTENDANCES_H(
   ID            INTEGER               
   ,PEOPLE_ID     INTEGER               
   ,TYPE_OF_ATT   VARCHAR2(50 CHAR)            -- CHECK_IN / CHECK_OUT
+  ,ORIGIN        VARCHAR2(50 CHAR) 
   ,CREATOR_USER  VARCHAR2(50 CHAR)     NULL    
   ,CREATED_AT    TIMESTAMP             NULL                 
   ,MOD_USER      VARCHAR2(50 CHAR)     NULL                
