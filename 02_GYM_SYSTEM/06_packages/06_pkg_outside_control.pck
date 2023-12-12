@@ -166,7 +166,7 @@ create or replace package body pkg_outside_control is
    IS
    BEGIN
       DECLARE 
-        R_ATTENDANCE_ID NUMBER; --Don't needed now
+        R_ATTENDANCE_ID NUMBER; --There is no need for this now
       BEGIN
         pkg_data_manipulation.insert_Attendance(attendances_seq.nextval,VAR_PEOPLE_ID,VAR_TYPE_OF_ATT,VAR_ORIGIN,R_ATTENDANCE_ID);
       END;
